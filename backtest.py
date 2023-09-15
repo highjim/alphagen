@@ -146,8 +146,8 @@ if __name__ == "__main__":
     qlib_backtest = QlibBacktest()
 
     data = StockData(instrument='csi300',
-                     start_time='2020-01-01',
-                     end_time='2021-12-31')
+                     start_time='2022-01-01',
+                     end_time='2023-08-31')
     expr = Mul(EMA(Sub(Delta(Mul(Log(open_),Constant(-30.0)),50),Constant(-0.01)),40),Mul(Div(Abs(EMA(low,50)),close),Constant(0.01)))
     data_df = data.make_dataframe(expr.evaluate(data))
 
