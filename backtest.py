@@ -142,13 +142,42 @@ class QlibBacktest:
         )
 
 
+#if __name__ == "__main__":
+##    qlib_backtest = QlibBacktest()
+#
+#    data = StockData(instrument='csi300',
+#                     start_time='2022-01-01',
+#                     end_time='2023-08-31')
+#    expr = Mul(EMA(Sub(Delta(Mul(Log(open_),Constant(-30.0)),50),Constant(-0.01)),40),Mul(Div(Abs(EMA(low,50)),close),Constant(0.01)))
+#    data_df = data.make_dataframe(expr.evaluate(data))
+#
+#    qlib_backtest.run(data_df)
+
+class QBacktest:
+    def __init__(self):
+        pass
+
+    def run(self, instrument='csi300', start_time='2022-01-01', end_time='2023-08-31', expr_str=None):
+        qlib_backtest = QlibBacktest()
+        data = StockData(instrument=instrument,
+                         start_time=start_time,
+                         end_time=end_time)
+        
+        if expr_str is not None:
+            expr = eval(expr_str)
+        else:
+            expr = Mul(EMA(Sub(Delta(Mul(Log(open_), Constant(-30.0)), 50), Constant(-0.01)), 40),
+                       Mul(Div(Abs(EMA(low, 50)), close), Constant(0.01)))
+        
+        data_df = data.make_dataframe(expr.evaluate(data))
+        
+        print("Running backtest with the following parameters:")
+        print(f"Instrument: {instrument}")
+        print(f"Start time: {start_time}")
+        print(f"End time: {end_time}")
+        print(f"Expression: {expr}")
+        
+        qlib_backtest.run(data_df)
+        
 if __name__ == "__main__":
-    qlib_backtest = QlibBacktest()
-
-    data = StockData(instrument='csi300',
-                     start_time='2022-01-01',
-                     end_time='2023-08-31')
-    expr = Mul(EMA(Sub(Delta(Mul(Log(open_),Constant(-30.0)),50),Constant(-0.01)),40),Mul(Div(Abs(EMA(low,50)),close),Constant(0.01)))
-    data_df = data.make_dataframe(expr.evaluate(data))
-
-    qlib_backtest.run(data_df)
+    fire.Fire(QBacktest)
