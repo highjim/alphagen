@@ -104,13 +104,13 @@ def main(
     # You can re-implement AlphaCalculator instead of using QLibStockDataCalculator.
     data_train = StockData(instrument=instruments,
                            start_time='2010-01-01',
-                           end_time='2019-12-31')
-    data_valid = StockData(instrument=instruments,
-                           start_time='2020-01-01',
                            end_time='2020-12-31')
+    data_valid = StockData(instrument=instruments,
+                           start_time='2021-01-01',
+                           end_time='2021-12-31')
     data_test = StockData(instrument=instruments,
-                          start_time='2021-01-01',
-                          end_time='2022-12-31')
+                          start_time='2022-01-01',
+                          end_time='2023-5-31')
     calculator_train = QLibStockDataCalculator(data_train, target)
     calculator_valid = QLibStockDataCalculator(data_valid, target)
     calculator_test = QLibStockDataCalculator(data_test, target)
@@ -129,7 +129,7 @@ def main(
     checkpoint_callback = CustomCallback(
         save_freq=10000,
         show_freq=10000,
-        save_path='/path/for/checkpoints',
+        save_path='/content/outputs/checkpoints',
         valid_calculator=calculator_valid,
         test_calculator=calculator_test,
         name_prefix=name_prefix,
@@ -152,7 +152,7 @@ def main(
         gamma=1.,
         ent_coef=0.01,
         batch_size=128,
-        tensorboard_log='/path/for/tb/log',
+        tensorboard_log='/content/outputs/tb/log',
         device=device,
         verbose=1,
     )
