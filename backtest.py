@@ -11,7 +11,7 @@ from alphagen.data.expression import *
 from alphagen_qlib.stock_data import StockData
 from alphagen_generic.features import *
 from alphagen_qlib.strategy import TopKSwapNStrategy
-
+import fire
 
 _T = TypeVar("_T")
 
